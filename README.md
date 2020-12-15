@@ -36,6 +36,17 @@ First try to synchronize your clock by running:
     sudo ntpdate -s time.nist.gov
 
 
+For newer Mac OS you need to run
+
+    sudo sntp -sS time.nist.gov
+
+
+Not sure whether it will help at all, but for maximum placebo effect, you should
+sync to the clock at Cornell
+
+    sudo sntp -sS ntp0.cornell.edu
+
+
 Calibrate out the overhead
 --------------------------
 
