@@ -3,7 +3,7 @@ import platform
 from datetime import datetime, timedelta
 from threading import Timer
 from subprocess import call, check_output
-from threading import _Timer
+from threading import Timer
 import matplotlib.pyplot as plt
 import time
 import numpy as np
@@ -12,13 +12,13 @@ def calibrate_overhead_distribution(ntrial=200, delay=0.1, nbin=40):
     """Calibrates the script overhead time distribution.
     """
     overhead_arr = np.zeros(ntrial)
-    for i in xrange(ntrial):
+    for i in range(ntrial):
         if np.mod(i, 10) == 0:
-            print i,
+            print(i, end=' ')
         now = datetime.now()
         run_at = now + timedelta(seconds=delay)
         run_at = run_at.strftime("%Y-%m-%d %H:%M:%S.%f")
-        output = check_output(['python', 'jackpot.py', run_at, '0'])
+        output = check_output(['python', 'jackpot.py', run_at, '0']).decode('utf-8')
         overhead = float(output.split('\n')[-2])
         overhead_arr[i] = overhead
     # overhead_arr = np.random.random(ntrial)*10000.0
@@ -43,18 +43,18 @@ def calibrate_overhead_distribution(ntrial=200, delay=0.1, nbin=40):
     ymax = np.max(hist) * 1.4
     ax.step(bins[:-1], hist, where="post", color="k")
     mode = 0.5 * (bins[np.argmax(hist)] + bins[np.argmax(hist)+1])
-    print("The most likely overhead calibrated against your computer is %10.6f microsec" % mode)
+    print(("The most likely overhead calibrated against your computer is %10.6f microsec" % mode))
     for p, oh, color in zip(psafe, overhead_psafe, colors):
         _p = p * 100.0
         ax.axvline(oh, color=color, linestyle='solid', linewidth=1)
         ax.annotate(format(_p, '2.0f') + "% safe", xy=(oh, 0.95*ymax),
                 xycoords='data', rotation=90, horizontalalignment='right',
                 color=color, fontsize=12)
-        print("pick %10.6f microsec with %4.2f%% chance of clicking after deadline." % (oh, _p))
+        print(("pick %10.6f microsec with %4.2f%% chance of clicking after deadline." % (oh, _p)))
     ax.set_ylim(0, ymax)
     ax.set_xlabel('overhead [microsec]', fontsize=12)
     ax.set_ylabel('N', fontsize=12)
-    print("The minimum overhead calibrated against your computer is %10.6f microsec" % xmin)
+    print(("The minimum overhead calibrated against your computer is %10.6f microsec" % xmin))
     plt.show()
 
 if __name__ == "__main__":

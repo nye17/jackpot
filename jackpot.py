@@ -2,9 +2,8 @@ import os
 import sys
 import platform
 from datetime import datetime, timedelta
-from threading import Timer
 from subprocess import call, check_output
-from threading import _Timer
+from threading import Timer
 import matplotlib.pyplot as plt
 import time
 import numpy as np
@@ -17,7 +16,7 @@ will get your reaction time to 350 microseconds, a thousand times faster.
 
 """
 
-class CustomTimer(_Timer):
+class CustomTimer(Timer):
     """ a custom timer for returning the execution time of a input function, from
     http://stackoverflow.com/a/28636221/560844
     """
@@ -103,11 +102,11 @@ def click(goal, mysys=None):
     return(real)
 
 def click_to_win(run_at="2015-05-7 16:00:00.000000", overhead_sec=0.0):
-    print("Will click at %s with %10.6f seconds of overhead" % (run_at, overhead_sec))
+    print(("Will click at %s with %10.6f seconds of overhead" % (run_at, overhead_sec)))
     goal, real = submit(run_at, timer='Custom', overhead_sec=overhead_sec)
     overhead = real - goal
     _overhead = overhead.microseconds
-    print("Success! The overhead [microseconds] is \n %10.6f" % _overhead)
+    print(("Success! The overhead [microseconds] is \n %10.6f" % _overhead))
     return(_overhead)
 
 if __name__ == "__main__":
