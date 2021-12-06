@@ -27,6 +27,11 @@ A Linux computer is preferred, as Mac seems to have some problem in synchronizin
 
 If you insist on using Mac, you have to download the [_cliclick_](https://www.bluem.net/en/mac/cliclick/) script to the jackpot directory. In Linux, _xdotool_ should come with your system, otherwise please install _xdotool_ using your favorate package management system.
 
+You may also have to install ntpdate on newer operating systems (e.g. Ubuntu 20.04).
+
+    sudo apt install ntpdate xdotool
+    
+
 Synchronize your clock
 ----------------------
 
